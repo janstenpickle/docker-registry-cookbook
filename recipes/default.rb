@@ -85,6 +85,23 @@ secret_key ||= node['docker-registry']['secret_key']
 
 raise ArgumentError, "secret_key is not defined" unless secret_key
 
+if node['roles'].include?('docker-registry_application_server') && node['docker-registry']['redis']
+  install "redis" do
+    action :run
+  end 
+
+  service "registry-redis" do
+    action [:start,:enable]
+  end
+
+  override['redisio']['servers'] = {
+    'registry-redis' => {
+      'maxmemorypolicy' => 'allkeys-lru',
+      'maxmemory' => '1gb'
+    }
+  }
+end
+
 application "docker-registry" do
   owner node['docker-registry']['owner']
   group node['docker-registry']['group']
@@ -124,6 +141,7 @@ application "docker-registry" do
     port node['docker-registry']['internal_port']
     workers node['docker-registry']['workers']
     worker_class "gevent"
+    autostart true
     app_module "wsgi:application"
     virtualenv ::File.join(node['docker-registry']['install_dir'], "env", node['docker-registry']['revision'])
     environment :SETTINGS_FLAVOR => node['docker-registry']['flavor']

@@ -3,7 +3,7 @@ maintainer        "Raul E Rangel"
 maintainer_email  "Raul.Rangel@Disney.com.com"
 license           "Apache 2.0"
 description       "Installs and configures docker-registry"
-version           "0.0.4dev"
+version           "0.0.4"
 
 recipe "docker-registry", "Installs the docker-registry and sets up configuration"
 
@@ -12,7 +12,7 @@ recipe "docker-registry", "Installs the docker-registry and sets up configuratio
   supports os
 end
 
-%w{ application_nginx application_python }.each do |cb|
+%w{ application_nginx application_python redisio }.each do |cb|
   depends cb
 end
 
