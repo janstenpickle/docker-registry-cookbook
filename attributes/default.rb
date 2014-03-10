@@ -53,12 +53,12 @@ default['docker-registry']['server_name'] = nil
 default['docker-registry']['application_server_role'] = 'docker-registry_application_server'
 
 default['docker-registry']['redis'] = false
-override['redisio']['servers'] = {
+override['redisio']['servers'] = [{
   'registry-redis' => {
     'maxmemorypolicy' => 'allkeys-lru',
     'maxmemory' => '1gb'
   }
-}
+}]
 
 case node['platform']
 when 'smartos'
