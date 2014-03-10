@@ -57,7 +57,8 @@ override['redisio']['servers'] = [{
   'name' => 'registry',
   'port' => '6379',
   'maxmemorypolicy' => 'allkeys-lru',
-  'maxmemory' => '1gb'
+  'maxmemory' => '1gb',
+  'shutdown_save' => true,
 }]
 
 case node['platform']
