@@ -54,11 +54,10 @@ default['docker-registry']['application_server_role'] = 'docker-registry_applica
 
 default['docker-registry']['redis'] = false
 override['redisio']['servers'] = [{
-  'registry' => {
-    'port' => '6379',
-    'maxmemorypolicy' => 'allkeys-lru',
-    'maxmemory' => '1gb'
-  }
+  'name' => 'registry',
+  'port' => '6379',
+  'maxmemorypolicy' => 'allkeys-lru',
+  'maxmemory' => '1gb'
 }]
 
 case node['platform']
