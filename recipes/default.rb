@@ -86,13 +86,7 @@ secret_key ||= node['docker-registry']['secret_key']
 raise ArgumentError, "secret_key is not defined" unless secret_key
 
 if node['roles'].include?('docker-registry_application_server') && node['docker-registry']['redis']
-  install "redis" do
-    action :run
-  end 
-
-  service "registry-redis" do
-    action [:start,:enable]
-  end
+  
 
   override['redisio']['servers'] = {
     'registry-redis' => {
@@ -100,6 +94,9 @@ if node['roles'].include?('docker-registry_application_server') && node['docker-
       'maxmemory' => '1gb'
     }
   }
+
+  include_recipe 'redisio::install'
+
 end
 
 application "docker-registry" do
