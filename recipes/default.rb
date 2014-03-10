@@ -87,14 +87,6 @@ raise ArgumentError, "secret_key is not defined" unless secret_key
 
 if node['roles'].include?('docker-registry_application_server') && node['docker-registry']['redis']
   
-
-  override['redisio']['servers'] = {
-    'registry-redis' => {
-      'maxmemorypolicy' => 'allkeys-lru',
-      'maxmemory' => '1gb'
-    }
-  }
-
   include_recipe 'redisio::install'
 
 end
