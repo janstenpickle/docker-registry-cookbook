@@ -15,7 +15,7 @@ common:
     index_endpoint: <%= @index_endpoint %>
     <% end %>
 
-    <% unless @redis %>
+    <% if @redis %>
     cache:
         host: localhost
         port: 6379
